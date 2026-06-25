@@ -1,0 +1,29 @@
+[
+  {
+    "id": "costume-fox-spirit",
+    "name": "Fox Spirit Kitsune Costume",
+    "tag": "Costume — Ready to Ship",
+    "price": 185,
+    "stripePriceId": "price_REPLACE_ME_1",
+    "image": "images/products/placeholder-1.jpg",
+    "description": "Hand-finished kitsune-style costume with tail and ear set. Sizes S–L in stock."
+  },
+  {
+    "id": "costume-storm-knight",
+    "name": "Storm Knight Armor Set",
+    "tag": "Costume — Ready to Ship",
+    "price": 240,
+    "stripePriceId": "price_REPLACE_ME_2",
+    "image": "images/products/placeholder-2.jpg",
+    "description": "Layered fabric armor with foam-backed pauldrons. Adjustable fit."
+  },
+  {
+    "id": "costume-moth-queen",
+    "name": "Moth Queen Gown",
+    "tag": "Costume — Ready to Ship",
+    "price": 210,
+    "stripePriceId": "price_REPLACE_ME_3",
+    "image": "images/products/placeholder-3.jpg",
+    "description": "Flowing gown with hand-painted wing panels. One available."
+  }
+]

@@ -1,0 +1,9 @@
+{
+  "name": "atelier-site",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Placeholder business site -- costumes, commissions, and alterations.",
+  "dependencies": {
+    "stripe": "^14.21.0"
+  }
+}

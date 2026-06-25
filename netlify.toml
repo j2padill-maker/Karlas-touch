@@ -1,0 +1,13 @@
+[build]
+  functions = "netlify/functions"
+  publish = "."
+
+# No catch-all redirect needed -- this is a multi-page static site
+# (index.html, shop.html, commissions.html, alterations.html, about.html),
+# not a single-page app. Each page is served directly by its filename.
+#
+# Add custom redirects here later if needed, e.g.:
+# [[redirects]]
+#   from = "/old-page"
+#   to = "/new-page.html"
+#   status = 301

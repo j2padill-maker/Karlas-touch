@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atelier — Custom Costumes &amp; Alterations</title>
+<meta name="description" content="Hand-finished costumes, commissions, and alterations — serving San Diego &amp; Tijuana, shipping anywhere.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">Atelier</a>
+    <button data-nav-toggle aria-label="Menu" style="display:none; background:none; border:none; font-size:1.4rem;">☰</button>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="commissions.html">Commissions</a></li>
+      <li><a href="customize.html">Customize</a></li>
+      <li><a href="alterations.html">Alterations</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <button class="nav-cart-btn" data-cart-open>
+      🧵 Cart <span data-cart-count style="display:none;">0</span>
+    </button>
+  </div>
+</nav>
+
+<header class="hero fabric-texture">
+  <div class="container">
+    <span class="hero-eyebrow">Hand-finished, San Diego &amp; Tijuana</span>
+    <h1>Garments made with intention,<br>stitched to fit your story.</h1>
+    <svg class="stitch-underline" viewBox="0 0 220 14"><path d="M5 8 Q 60 -2, 110 8 T 215 8"/></svg>
+    <p class="lede">Karla designs and tailors costumes, commissions, and alterations — from ready-to-ship pieces to bridal fittings, made by hand and built to last.</p>
+    <div class="hero-actions">
+      <a href="commissions.html" class="btn btn-primary">Start a custom commission</a>
+      <a href="alterations.html" class="btn btn-secondary">Book an alteration</a>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+  <section class="section">
+    <h2 class="text-center">Where would you like to begin?</h2>
+    <div class="split-section" style="grid-template-columns: repeat(3, 1fr);">
+      <div class="path-card reveal">
+        <span class="icon">🦋</span>
+        <h3>Custom Commissions &amp; Costumes</h3>
+        <p>Browse ready-to-ship costumes or commission a one-of-a-kind piece — cosplay, character work, or anything you can describe. Ships across the US &amp; Canada.</p>
+        <a href="shop.html" class="btn btn-secondary">Shop ready-made</a>
+        &nbsp;
+        <a href="commissions.html" class="btn btn-primary">Request a commission</a>
+      </div>
+      <div class="path-card reveal">
+        <span class="icon">🎨</span>
+        <h3>Custom Clothing &amp; Upcycling</h3>
+        <p>Already have a piece you love? Send it our way for a hand-painted back panel, sleeve swap, or patchwork refresh — give it a second life.</p>
+        <a href="customize.html" class="btn btn-primary">Start a customization</a>
+      </div>
+      <div class="path-card reveal">
+        <span class="icon">🪡</span>
+        <h3>Alterations</h3>
+        <p>Hemming, resizing, and general alterations for clients in San Diego and Tijuana. Careful, precise work with clear timelines.</p>
+        <a href="alterations.html" class="btn btn-primary">See services &amp; book</a>
+      </div>
+    </div>
+  </section>
+
+  <hr class="stitch-divider">
+
+  <section class="section text-center">
+    <h2>What clients say</h2>
+    <div class="grid reveal-stagger" style="grid-template-columns: repeat(auto-fit, minmax(260px,1fr));">
+      <div class="card"><div class="card-body">
+        <p class="muted">"The fit was perfect and it arrived right on time for the convention. Incredible detail work."</p>
+        <strong>— Etsy customer</strong>
+      </div></div>
+      <div class="card"><div class="card-body">
+        <p class="muted">"Karla altered three dresses for our wedding party and every one fit beautifully."</p>
+        <strong>— Local client</strong>
+      </div></div>
+      <div class="card"><div class="card-body">
+        <p class="muted">"Clear communication, fast turnaround, and the costume held up the entire weekend."</p>
+        <strong>— Etsy customer</strong>
+      </div></div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>Atelier · Serving San Diego &amp; Tijuana · Shipping nationwide<br>
+  Deposits required on custom work — see <a href="alterations.html#policy">payment policy</a>.</p>
+</footer>
+
+<!-- Cart drawer -->
+<div class="cart-overlay" data-cart-overlay></div>
+<aside class="cart-drawer" data-cart-drawer>
+  <h3>Your Cart <button data-cart-close aria-label="Close cart">×</button></h3>
+  <div class="cart-items" data-cart-items></div>
+  <div class="cart-total"><span>Total</span><span data-cart-total>$0.00</span></div>
+  <button class="btn btn-primary" style="width:100%; margin-top:16px;" data-checkout-btn>Checkout</button>
+</aside>
+<div class="toast" data-toast></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

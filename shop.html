@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shop Ready-to-Ship Costumes — Atelier</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">Atelier</a>
+    <button data-nav-toggle aria-label="Menu" style="display:none; background:none; border:none; font-size:1.4rem;">☰</button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html" class="active">Shop</a></li>
+      <li><a href="commissions.html">Commissions</a></li>
+      <li><a href="customize.html">Customize</a></li>
+      <li><a href="alterations.html">Alterations</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <button class="nav-cart-btn" data-cart-open>🧵 Cart <span data-cart-count style="display:none;">0</span></button>
+  </div>
+</nav>
+
+<header class="hero fabric-texture" style="padding-bottom:50px;">
+  <div class="container">
+    <span class="hero-eyebrow">Ready to ship</span>
+    <h1>Shop the costume rack</h1>
+    <p class="lede">Made-to-order pieces in limited quantities. Once a size sells out, it's gone until the next batch — no two runs are identical.</p>
+  </div>
+</header>
+
+<main class="container">
+  <div class="grid" data-shop-grid>
+    <!-- Rendered by js/main.js from data/products.json -->
+  </div>
+
+  <p class="text-center muted" style="margin-top:40px;">
+    Looking for something specific instead? <a href="commissions.html">Request a custom commission →</a>
+  </p>
+</main>
+
+<footer class="site-footer">
+  <p>Atelier · Serving San Diego &amp; Tijuana · Shipping nationwide</p>
+</footer>
+
+<div class="cart-overlay" data-cart-overlay></div>
+<aside class="cart-drawer" data-cart-drawer>
+  <h3>Your Cart <button data-cart-close aria-label="Close cart">×</button></h3>
+  <div class="cart-items" data-cart-items></div>
+  <div class="cart-total"><span>Total</span><span data-cart-total>$0.00</span></div>
+  <button class="btn btn-primary" style="width:100%; margin-top:16px;" data-checkout-btn>Checkout</button>
+</aside>
+<div class="toast" data-toast></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

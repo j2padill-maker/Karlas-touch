@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alterations — Atelier</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">Atelier</a>
+    <button data-nav-toggle aria-label="Menu" style="display:none; background:none; border:none; font-size:1.4rem;">☰</button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="commissions.html">Commissions</a></li>
+      <li><a href="customize.html">Customize</a></li>
+      <li><a href="alterations.html" class="active">Alterations</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <button class="nav-cart-btn" data-cart-open>🧵 Cart <span data-cart-count style="display:none;">0</span></button>
+  </div>
+</nav>
+
+<header class="hero fabric-texture" style="padding-bottom:50px;">
+  <div class="container">
+    <span class="hero-eyebrow">San Diego &amp; Tijuana</span>
+    <h1>Alterations done right, on a timeline you can count on</h1>
+    <p class="lede">Hemming, resizing, and general garment alterations — fitted, pinned, and finished by hand.</p>
+  </div>
+</header>
+
+<main class="container">
+
+  <section class="section">
+    <h2>Services</h2>
+    <div class="grid reveal-stagger">
+      <div class="card"><div class="card-body">
+        <span class="tag">Everyday</span>
+        <h4>Hemming</h4>
+        <p class="muted">Pants, skirts, dresses — clean, durable hems.</p>
+        <p class="price">From $20</p>
+      </div></div>
+      <div class="card"><div class="card-body">
+        <span class="tag">Everyday</span>
+        <h4>Resizing</h4>
+        <p class="muted">Take in or let out shirts, dresses, and suiting.</p>
+        <p class="price">From $25</p>
+      </div></div>
+      <div class="card"><div class="card-body">
+        <span class="tag">Everyday</span>
+        <h4>General Repairs</h4>
+        <p class="muted">Zippers, seams, linings, and other fixes.</p>
+        <p class="price">From $15</p>
+      </div></div>
+    </div>
+  </section>
+
+  <hr class="stitch-divider">
+
+  <section class="section" id="booking-form">
+    <h2 class="text-center">Book an alteration</h2>
+    <p class="text-center muted">We'll follow up with a quote and timeline within 24–48 hours.</p>
+
+    <form class="form-card" name="alteration-booking" method="POST" data-netlify="true" netlify-honeypot="bot-field" onsubmit="return handleBookingSubmit(event)">
+      <input type="hidden" name="form-name" value="alteration-booking">
+      <p style="display:none;"><label>Don't fill this out: <input name="bot-field"></label></p>
+
+      <label for="b-name">Your name</label>
+      <input type="text" id="b-name" name="name" required>
+
+      <label for="b-email">Email</label>
+      <input type="email" id="b-email" name="email" required>
+
+      <label for="garment">Garment type</label>
+      <select id="garment" name="garment" required>
+        <option value="">Select one</option>
+        <option>Hemming</option>
+        <option>Resizing</option>
+        <option>Repair</option>
+        <option>Other</option>
+      </select>
+
+      <label for="event-date">Needed by (if applicable)</label>
+      <input type="date" id="event-date" name="event_date">
+
+      <label for="location">Preferred meeting location</label>
+      <select id="location" name="location">
+        <option>San Diego</option>
+        <option>Tijuana</option>
+        <option>Either works</option>
+      </select>
+
+      <label for="notes">Anything else we should know?</label>
+      <textarea id="notes" name="notes"></textarea>
+
+      <button type="submit" class="btn btn-primary" style="width:100%; margin-top:24px;">Send booking request</button>
+      <div class="form-success" data-form-success>Thank you — your request is in. We'll email you within 24–48 hours.</div>
+    </form>
+  </section>
+
+  <hr class="stitch-divider">
+
+  <section class="section" id="policy">
+    <h2 class="text-center">Payment policy</h2>
+    <p class="text-center muted" style="max-width:560px; margin:0 auto;">
+      A 30–50% deposit is collected once a quote is accepted, covering materials and scheduling.
+      The remaining balance is due at pickup. This protects both your spot on the calendar and the cost of materials already purchased.
+    </p>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>Atelier · Serving San Diego &amp; Tijuana · Shipping nationwide</p>
+</footer>
+
+<div class="cart-overlay" data-cart-overlay></div>
+<aside class="cart-drawer" data-cart-drawer>
+  <h3>Your Cart <button data-cart-close aria-label="Close cart">×</button></h3>
+  <div class="cart-items" data-cart-items></div>
+  <div class="cart-total"><span>Total</span><span data-cart-total>$0.00</span></div>
+  <button class="btn btn-primary" style="width:100%; margin-top:16px;" data-checkout-btn>Checkout</button>
+</aside>
+<div class="toast" data-toast></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/main.js"></script>
+<script>
+  function handleBookingSubmit(e) {
+    e.preventDefault();
+    const form = e.target;
+    fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams(new FormData(form)).toString(),
+    }).then(() => {
+      form.style.display = "none";
+      document.querySelector("[data-form-success]").style.display = "block";
+    });
+    return false;
+  }
+</script>
+</body>
+</html>

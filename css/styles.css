@@ -1,21 +1,21 @@
 /* ===========================================================
-   DESIGN TOKENS — Warm & Handmade Artisan Palette
+   DESIGN TOKENS — Aqua/Teal Artisan Palette
    =========================================================== */
 :root {
-  --linen:      #FAF3E8;
-  --linen-dark: #F0E6D6;
-  --thread:     #8B5E3C;
-  --espresso:   #3D3027;
-  --tan:        #C9A47E;
-  --sage:       #6B7355;
-  --pin-red:    #C2453D;
-  --paper-edge: #E4D6BE;
+  --linen:      #F0F7F5;
+  --linen-dark: #E3EFEC;
+  --thread:     #2D7D7D;
+  --espresso:   #1F3838;
+  --tan:        #7FC8C8;
+  --sage:       #5B8A82;
+  --pin-red:    #D9824A;
+  --paper-edge: #CBE6E2;
 
-  --font-display: "Fraunces", "Georgia", serif;
+  --font-display: "Gloria Hallelujah", "Fraunces", "Georgia", serif;
   --font-body: "Inter", -apple-system, sans-serif;
 
   --radius-soft: 6px;
-  --shadow-stitch: 0 1px 0 rgba(61,48,39,0.08);
+  --shadow-stitch: 0 1px 0 rgba(31,56,56,0.08);
 }
 
 * { box-sizing: border-box; }
@@ -43,10 +43,11 @@ body {
 
 h1, h2, h3, .display {
   font-family: var(--font-display);
-  font-weight: 600;
+  font-weight: 400;
   color: var(--espresso);
   margin: 0 0 0.5em;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
+  line-height: 1.3;
 }
 
 h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); }
@@ -226,7 +227,7 @@ img { max-width: 100%; display: block; }
   max-width: 560px;
   margin: 18px auto 32px;
   font-size: 1.1rem;
-  color: #5b4d3f;
+  color: #3F6361;
 }
 
 .hero-actions {
@@ -281,7 +282,7 @@ img { max-width: 100%; display: block; }
 }
 .path-card .icon { font-size: 2rem; margin-bottom: 12px; display: block; }
 .path-card h3 { margin-bottom: 8px; }
-.path-card p { color: #5b4d3f; margin-bottom: 20px; }
+.path-card p { color: #3F6361; margin-bottom: 20px; }
 
 /* ===========================================================
    GRID / CARDS (portfolio, shop, services)
@@ -373,7 +374,7 @@ textarea { resize: vertical; min-height: 100px; }
 
 .form-success {
   display: none;
-  background: #EFF3EA;
+  background: #E5F3F0;
   border: 1px solid var(--sage);
   border-radius: var(--radius-soft);
   padding: 16px;
@@ -445,7 +446,7 @@ textarea { resize: vertical; min-height: 100px; }
    =========================================================== */
 .section { padding: 60px 0; }
 .text-center { text-align: center; }
-.muted { color: #5b4d3f; }
+.muted { color: #3F6361; }
 .toast {
   position: fixed;
   bottom: 24px; left: 50%;

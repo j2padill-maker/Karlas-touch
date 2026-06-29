@@ -64,6 +64,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 /* ===========================================================
    SHOP — render products from data/products.json
+   Each card now shows BOTH "Add to cart" (for customers who
+   may want to buy more than one thing) and "Buy Now" (for a
+   customer who wants to check out immediately with just this
+   one item, skipping the cart entirely).
    =========================================================== */
 async function renderShop() {
   const grid = document.querySelector("[data-shop-grid]");
@@ -85,6 +89,10 @@ async function renderShop() {
         <button class="btn btn-primary" style="margin-top:10px; width:100%;"
           onclick='addToCart(${JSON.stringify(p)})'>
           Add to cart
+        </button>
+        <button class="btn btn-secondary" style="margin-top:6px; width:100%;"
+          onclick='buyNow("${p.stripePriceId}", this)'>
+          Buy Now
         </button>
       </div>
     </div>`

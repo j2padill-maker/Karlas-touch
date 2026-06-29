@@ -1,29 +1,38 @@
 [
   {
-    "id": "costume-fox-spirit",
-    "name": "Fox Spirit Kitsune Costume",
-    "tag": "Costume — Ready to Ship",
-    "price": 185,
-    "stripePriceId": "price_REPLACE_ME_1",
+    "id": "costume-ninja-turtle",
+    "name": "Ninja Turtle Costume",
+    "tag": "Standard Costume",
+    "price": 30,
+    "stripePriceId": "price_1TnUD7RLvsZ5Ug7UySsidr9Z",
     "image": "images/products/placeholder-1.jpg",
-    "description": "Hand-finished kitsune-style costume with tail and ear set. Sizes S–L in stock."
+    "description": "Ready-to-ship Ninja Turtle costume, standard sizing."
   },
   {
-    "id": "costume-storm-knight",
-    "name": "Storm Knight Armor Set",
-    "tag": "Costume — Ready to Ship",
-    "price": 240,
-    "stripePriceId": "price_REPLACE_ME_2",
+    "id": "costume-turtle-shell",
+    "name": "Turtle Shell Costume",
+    "tag": "Standard Costume",
+    "price": 30,
+    "stripePriceId": "price_1TnUDoRLvsZ5Ug7UyYWQQcGJ",
     "image": "images/products/placeholder-2.jpg",
-    "description": "Layered fabric armor with foam-backed pauldrons. Adjustable fit."
+    "description": "Ready-to-ship Turtle Shell costume, standard sizing."
   },
   {
-    "id": "costume-moth-queen",
-    "name": "Moth Queen Gown",
-    "tag": "Costume — Ready to Ship",
-    "price": 210,
-    "stripePriceId": "price_REPLACE_ME_3",
+    "id": "costume-roblox",
+    "name": "Roblox/Minecraft Costume",
+    "tag": "Standard Costume",
+    "price": 30,
+    "stripePriceId": "price_1TnUF8RLvsZ5Ug7UtJIoNEnC",
     "image": "images/products/placeholder-3.jpg",
-    "description": "Flowing gown with hand-painted wing panels. One available."
+    "description": "Ready-to-ship Roblox/Minecraft-style costume, standard sizing."
+  },
+  {
+    "id": "fridah-khalo-jacket",
+    "name": "Fridah Khalo Jacket",
+    "tag": "Designed Piece \u2014 One of a Kind",
+    "price": 45,
+    "stripePriceId": "price_1Tn3PNRLvsZ5Ug7UueONsp3H",
+    "image": "images/products/placeholder-4.jpg",
+    "description": "Hand-painted, one-of-a-kind designed jacket."
   }
 ]

@@ -148,6 +148,44 @@ async function startCheckout() {
   }
 }
 
+/* ===========================================================
+   BUY NOW — single-item checkout, bypasses the cart entirely.
+   Used on standalone product buttons (alterations, costumes,
+   consultation deposit, etc.) where a customer wants to pay
+   for just one thing immediately, without going through the
+   multi-item cart flow.
+   =========================================================== */
+async function buyNow(stripePriceId, btn) {
+  const originalText = btn ? btn.textContent : "";
+  if (btn) {
+    btn.disabled = true;
+    btn.textContent = "Redirecting to secure checkout…";
+  }
+
+  try {
+    const res = await fetch("/.netlify/functions/create-checkout", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        items: [{ priceId: stripePriceId, qty: 1 }],
+      }),
+    });
+    const data = await res.json();
+    if (data.url) {
+      window.location.href = data.url;
+    } else {
+      throw new Error(data.error || "Checkout failed to start");
+    }
+  } catch (err) {
+    showToast("Something went wrong starting checkout. Please try again.");
+    if (btn) {
+      btn.disabled = false;
+      btn.textContent = originalText || "Buy Now";
+    }
+    console.error(err);
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   renderCart();
   updateCartCount();

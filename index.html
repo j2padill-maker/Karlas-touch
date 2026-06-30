@@ -8,6 +8,29 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
+
+<!-- ===== Tape measure hero animation — added styles =====
+     Self-contained block, IDs are unique (#tape-...), nothing here
+     overrides anything in css/styles.css. Safe to delete this whole
+     block plus the #tape-layer markup in the header and the script
+     near the bottom if it ever needs to be removed. -->
+<style>
+  #tape-anchor { position:absolute; top:0; left:40px; width:1px; height:1px; }
+  #tape-layer { position:absolute; inset:0; pointer-events:none; }
+
+  #tape-swing-wrap { position:absolute; top:0; left:0; transform-origin: top center; }
+  #tape-reveal-wrap { position:absolute; top:0; left:0; overflow:hidden; width:110px; height:0; }
+  #tape-stack { position:absolute; top:0; left:0; width:110px; }
+
+  #tape-head { position:absolute; top:0; left:0; width:110px; height:auto; }
+  #tape-tile {
+    position:absolute; left:0; width:110px;
+    background-image: url('tape-tile.png');
+    background-repeat: repeat-y;
+    background-size: 110px 16px;
+  }
+  #tape-tip { position:absolute; left:0; width:110px; height:auto; }
+</style>
 </head>
 <body>
 
@@ -29,15 +52,29 @@
   </div>
 </nav>
 
-<header class="hero fabric-texture">
+<header class="hero fabric-texture" style="position:relative;">
   <div class="container">
     <span class="hero-eyebrow">Hand-finished, San Diego &amp; Tijuana</span>
     <h1>Garments made with intention,<br>stitched to fit your story.</h1>
     <svg class="stitch-underline" viewBox="0 0 220 14"><path d="M5 8 Q 60 -2, 110 8 T 215 8"/></svg>
     <p class="lede">Karla designs and tailors costumes, commissions, and alterations — from ready-to-ship pieces to custom collaborations, made by hand and built to last.</p>
     <div class="hero-actions">
-      <a href="commissions.html" class="btn btn-primary">Start a custom commission</a>
+      <a href="commissions.html" id="cta-commission" class="btn btn-primary">Start a custom commission</a>
       <a href="alterations.html" class="btn btn-secondary">Book an alteration</a>
+    </div>
+  </div>
+
+  <!-- Tape measure hero animation — added markup -->
+  <div id="tape-anchor"></div>
+  <div id="tape-layer">
+    <div id="tape-swing-wrap">
+      <div id="tape-reveal-wrap">
+        <div id="tape-stack">
+          <img id="tape-head" src="tape-head.png" alt="">
+          <div id="tape-tile"></div>
+          <img id="tape-tip" src="tape-tip.png" alt="">
+        </div>
+      </div>
     </div>
   </div>
 </header>
@@ -111,5 +148,105 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="js/cart.js"></script>
 <script src="js/main.js"></script>
+
+<!-- ===== Tape measure hero animation — added script =====
+     Reuses the GSAP already loaded above; does not load it again. -->
+<script>
+(function TapeMeasureAnimation() {
+  const hero = document.querySelector('header.hero');
+  const anchor = document.getElementById('tape-anchor');
+  const button = document.getElementById('cta-commission');
+  const swingWrap = document.getElementById('tape-swing-wrap');
+  const revealWrap = document.getElementById('tape-reveal-wrap');
+  const stack = document.getElementById('tape-stack');
+  const headImg = document.getElementById('tape-head');
+  const tileDiv = document.getElementById('tape-tile');
+  const tipImg = document.getElementById('tape-tip');
+
+  if (!hero || !anchor || !button || typeof gsap === 'undefined') return; // fail quietly if anything's missing
+
+  const TAPE_W = 110;
+  const HEAD_NATURAL = { w: 380, h: 339 };
+  const TILE_NATURAL = { w: 380, h: 55 };
+  const TIP_NATURAL  = { w: 380, h: 80 };
+
+  const scale = TAPE_W / HEAD_NATURAL.w;
+  const headH = HEAD_NATURAL.h * scale;
+  const tileTileH = TILE_NATURAL.h * scale;
+  const tipH = TIP_NATURAL.h * scale;
+
+  function measure() {
+    const heroRect = hero.getBoundingClientRect();
+    const anchorRect = anchor.getBoundingClientRect();
+    const btnRect = button.getBoundingClientRect();
+
+    const mountX = anchorRect.left - heroRect.left;
+    const mountY = anchorRect.top - heroRect.top;
+
+    const targetY = (btnRect.top - heroRect.top) + (btnRect.height / 2);
+    const dropHeight = Math.max(headH + tipH + 20, targetY - mountY);
+    const tileSpanH = Math.max(0, dropHeight - headH - tipH);
+
+    return { mountX, mountY, dropHeight, tileSpanH };
+  }
+
+  function layout() {
+    const g = measure();
+    gsap.set(swingWrap, { x: g.mountX + 14, y: g.mountY });
+    gsap.set(revealWrap, { x: 0, y: 0, width: TAPE_W });
+    gsap.set(stack, { width: TAPE_W });
+
+    gsap.set(headImg, { x: 0, y: 0, width: TAPE_W });
+    gsap.set(tileDiv, { x: 0, y: headH, width: TAPE_W, height: g.tileSpanH });
+    tileDiv.style.backgroundSize = `${TAPE_W}px ${tileTileH}px`;
+    gsap.set(tipImg, { x: 0, y: headH + g.tileSpanH, width: TAPE_W });
+
+    return g;
+  }
+
+  function playAnimation() {
+    const g = layout();
+    gsap.set(revealWrap, { height: 0 });
+    gsap.set(swingWrap, { rotation: 0 });
+
+    const tl = gsap.timeline();
+
+    tl.to(revealWrap, { height: g.dropHeight, duration: 1.05, ease: 'power2.in' }, 0);
+
+    tl.fromTo(revealWrap, { scaleY: 1 }, { scaleY: 1.04, duration: 0.1, ease: 'power1.out' }, 1.0)
+      .to(revealWrap, { scaleY: 1, duration: 0.35, ease: 'elastic.out(1, 0.4)' }, 1.1);
+
+    tl.to(swingWrap, { rotation: 4, duration: 0.28, ease: 'power1.out' }, 0.98)
+      .to(swingWrap, { rotation: -2.4, duration: 0.36, ease: 'sine.inOut' }, 1.26)
+      .to(swingWrap, { rotation: 1.2, duration: 0.34, ease: 'sine.inOut' }, 1.62)
+      .to(swingWrap, { rotation: 0, duration: 0.4, ease: 'sine.inOut' }, 1.96);
+
+    return tl;
+  }
+
+  function endState() {
+    const g = layout();
+    gsap.set(revealWrap, { height: g.dropHeight, scaleY: 1 });
+    gsap.set(swingWrap, { rotation: 0 });
+  }
+
+  const STORAGE_KEY = 'kds_hero_tape_played';
+  const hasPlayed = () => { try { return sessionStorage.getItem(STORAGE_KEY) === '1'; } catch (e) { return false; } };
+  const markPlayed = () => { try { sessionStorage.setItem(STORAGE_KEY, '1'); } catch (e) {} };
+
+  function init() {
+    if (hasPlayed()) { endState(); } else { playAnimation(); markPlayed(); }
+  }
+
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(endState, 120);
+  });
+
+  requestAnimationFrame(() => requestAnimationFrame(init));
+})();
+</script>
+
 </body>
 </html>

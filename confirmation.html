@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order Confirmed — Karla's Design & Stitch</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .confirmation-section {
+      max-width: 680px;
+      margin: 60px auto;
+      padding: 0 24px 80px;
+      text-align: center;
+    }
+    .confirmation-section h1 {
+      font-family: 'Gloria Hallelujah', cursive;
+      font-size: 2rem;
+      color: #2a9d8f;
+      margin-bottom: 16px;
+    }
+    .confirmation-section .subtitle {
+      font-size: 1.1rem;
+      color: #555;
+      margin-bottom: 8px;
+    }
+    .turnaround {
+      display: inline-block;
+      background: #e8f7f5;
+      color: #2a9d8f;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-weight: 600;
+      margin: 16px 0 40px;
+      font-size: 0.95rem;
+    }
+    .delivery-form {
+      background: #fafafa;
+      border: 1px solid #e0e0e0;
+      border-radius: 12px;
+      padding: 32px;
+      text-align: left;
+    }
+    .delivery-form h2 {
+      font-family: 'Gloria Hallelujah', cursive;
+      font-size: 1.2rem;
+      color: #333;
+      margin-bottom: 8px;
+    }
+    .delivery-form p {
+      color: #666;
+      margin-bottom: 24px;
+      font-size: 0.95rem;
+    }
+    .radio-group {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .radio-option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .radio-option input[type="radio"] {
+      accent-color: #2a9d8f;
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+    .info-box {
+      display: none;
+      background: #fff;
+      border: 1px solid #c8ebe8;
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin-bottom: 24px;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: #444;
+    }
+    .info-box.visible {
+      display: block;
+    }
+    .info-box strong {
+      display: block;
+      color: #2a9d8f;
+      font-size: 1rem;
+      margin-bottom: 6px;
+    }
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+    .form-field label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #333;
+    }
+    .form-field input,
+    .form-field textarea {
+      padding: 10px 14px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      color: #333;
+      resize: vertical;
+    }
+    .form-field input:focus,
+    .form-field textarea:focus {
+      outline: none;
+      border-color: #2a9d8f;
+    }
+    .btn-submit {
+      background: #2a9d8f;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 14px 32px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      font-family: 'Inter', sans-serif;
+      transition: background 0.2s;
+    }
+    .btn-submit:hover {
+      background: #21867a;
+    }
+    .success-msg {
+      display: none;
+      text-align: center;
+      padding: 20px;
+      color: #2a9d8f;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 40px;
+      color: #2a9d8f;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Karla's Design &amp; Stitch</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="commissions.html">Commissions</a></li>
+        <li><a href="customize.html">Customize</a></li>
+        <li><a href="alterations.html">Alterations</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+      <button class="nav-cart-btn" onclick="window.location.href='shop.html'">🛒 Cart</button>
+    </div>
+  </nav>
+
+  <section class="confirmation-section">
+    <h1>You're all set! 🎉</h1>
+    <p class="subtitle">Thank you — your payment was received and Karla has been notified.</p>
+    <p class="subtitle">A receipt has been sent to your email from Stripe.</p>
+    <span class="turnaround">⏱ Estimated turnaround: 1 week</span>
+
+    <div class="delivery-form">
+      <h2>How will you get your item to us?</h2>
+      <p>Let Karla know so she can prepare for your order. Fill this out and she'll follow up with any additional details.</p>
+
+      <form name="delivery-preference" method="POST" data-netlify="true">
+        <input type="hidden" name="form-name" value="delivery-preference" />
+
+        <div class="form-field">
+          <label for="customer-name">Your name</label>
+          <input type="text" id="customer-name" name="name" required placeholder="Full name" />
+        </div>
+
+        <div class="form-field">
+          <label for="customer-email">Your email</label>
+          <input type="email" id="customer-email" name="email" required placeholder="email@example.com" />
+        </div>
+
+        <div class="form-field">
+          <label>How will you send your item?</label>
+          <div class="radio-group">
+            <label class="radio-option">
+              <input type="radio" name="delivery-method" value="Drop-off" onchange="showInfo('dropoff')" required />
+              I'll drop it off in person
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="delivery-method" value="Mail-in" onchange="showInfo('mailin')" />
+              I'll mail it in
+            </label>
+          </div>
+        </div>
+
+        <!-- Drop-off info box -->
+        <div class="info-box" id="info-dropoff">
+          <strong>📍 Drop-off Location</strong>
+          7733 Orien Ave, La Mesa, CA 91941<br />
+          <strong style="margin-top:12px; display:block;">🕐 Drop-off Hours</strong>
+          Monday – Saturday, 10:00 AM – 6:00 PM<br /><br />
+          No appointment needed for standard alterations. Please include your name and a brief note about the work needed with your item.
+        </div>
+
+        <!-- Mail-in info box -->
+        <div class="info-box" id="info-mailin">
+          <strong>📬 Mail your item to:</strong>
+          Karla's Design &amp; Stitch<br />
+          7733 Orien Ave<br />
+          La Mesa, CA 91941<br /><br />
+          Please include your name, email address, and a note describing the work needed inside the package. Karla will contact you regarding return shipping once your item is received.
+        </div>
+
+        <div class="form-field">
+          <label for="notes">Any notes for Karla? (optional)</label>
+          <textarea id="notes" name="notes" rows="3" placeholder="e.g. preferred drop-off day, special instructions, description of the work needed..."></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit">Send to Karla</button>
+        <p class="success-msg" id="success-msg">✅ Got it! Karla will be in touch soon.</p>
+      </form>
+    </div>
+
+    <a href="index.html" class="back-link">← Back to homepage</a>
+  </section>
+
+  <script>
+    function showInfo(type) {
+      document.getElementById('info-dropoff').classList.remove('visible');
+      document.getElementById('info-mailin').classList.remove('visible');
+      if (type === 'dropoff') {
+        document.getElementById('info-dropoff').classList.add('visible');
+      } else {
+        document.getElementById('info-mailin').classList.add('visible');
+      }
+    }
+
+    // Netlify Forms AJAX submission
+    const form = document.querySelector('form[name="delivery-preference"]');
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const data = new FormData(form);
+      fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(data).toString()
+      })
+      .then(() => {
+        form.style.display = 'none';
+        document.getElementById('success-msg').style.display = 'block';
+      })
+      .catch(() => {
+        alert('Something went wrong. Please email Karla directly to confirm your drop-off or mail-in.');
+      });
+    });
+  </script>
+
+</body>
+</html>

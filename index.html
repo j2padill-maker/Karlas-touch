@@ -230,12 +230,8 @@
     gsap.set(swingWrap, { rotation: 0 });
   }
 
-  const STORAGE_KEY = 'kds_hero_tape_played';
-  const hasPlayed = () => { try { return sessionStorage.getItem(STORAGE_KEY) === '1'; } catch (e) { return false; } };
-  const markPlayed = () => { try { sessionStorage.setItem(STORAGE_KEY, '1'); } catch (e) {} };
-
   function init() {
-    if (hasPlayed()) { endState(); } else { playAnimation(); markPlayed(); }
+    playAnimation();
   }
 
   let resizeTimer;

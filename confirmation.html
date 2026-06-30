@@ -175,11 +175,19 @@
   </nav>
 
   <section class="confirmation-section">
-    <h1>One more step — tell us how you'll get this to us</h1>
-    <p class="subtitle">Your payment was received and Karla has been notified. A receipt has been emailed to you from Stripe.</p>
-    <span class="turnaround">⏱ Estimated turnaround: 1 week</span>
+    <div id="pre-submit-header">
+      <h1>One more step — tell us how you'll get this to us</h1>
+      <p class="subtitle">Your payment was received and Karla has been notified. A receipt has been emailed to you from Stripe.</p>
+      <span class="turnaround">⏱ Estimated turnaround: 1 week</span>
+    </div>
 
-    <div class="delivery-form">
+    <div id="post-submit-header" style="display:none;">
+      <h1>You're all set! 🎉</h1>
+      <p class="subtitle">Thanks — Karla has your delivery details and will follow up if needed.</p>
+      <span class="turnaround">⏱ Estimated turnaround: 1 week</span>
+    </div>
+
+    <div class="delivery-form" id="delivery-form-wrapper">
       <h2>How will you get your item to us?</h2>
       <p>This last step matters — without it, Karla won't know whether to expect a drop-off or a package in the mail.</p>
 
@@ -234,9 +242,10 @@
         </div>
 
         <button type="submit" class="btn-submit">Send to Karla</button>
-        <p class="success-msg" id="success-msg">✅ Got it! Karla will be in touch soon.</p>
       </form>
     </div>
+
+    <p class="success-msg" id="success-msg">✅ Got it! Karla has your delivery details and will be in touch if needed.</p>
 
     <a href="index.html" class="back-link">← Back to homepage</a>
   </section>
@@ -263,7 +272,9 @@
         body: new URLSearchParams(data).toString()
       })
       .then(() => {
-        form.style.display = 'none';
+        document.getElementById('pre-submit-header').style.display = 'none';
+        document.getElementById('post-submit-header').style.display = 'block';
+        document.getElementById('delivery-form-wrapper').style.display = 'none';
         document.getElementById('success-msg').style.display = 'block';
       })
       .catch(() => {

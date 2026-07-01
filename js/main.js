@@ -64,21 +64,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 /* ===========================================================
    SHOP — render products from data/products.json
-   Each card now shows BOTH "Add to cart" (for customers who
-   may want to buy more than one thing) and "Buy Now" (for a
-   customer who wants to check out immediately with just this
-   one item, skipping the cart entirely).
+   Products are split into two grids based on their tag:
+     "Standard Costume"          → data-shop-grid-costumes
+     "Designed Piece — One of a Kind" → data-shop-grid-designed
+   Adding a new product to either section requires only a new
+   entry in data/products.json with the correct tag — no HTML
+   changes needed.
    =========================================================== */
-async function renderShop() {
-  const grid = document.querySelector("[data-shop-grid]");
-  if (!grid) return;
-
-  const res = await fetch("data/products.json");
-  const products = await res.json();
-
-  grid.innerHTML = products
-    .map(
-      (p) => `
+function productCardHTML(p) {
+  return `
     <div class="card reveal">
       <img src="${p.image}" alt="${p.name}" loading="lazy">
       <div class="card-body">
@@ -95,9 +89,22 @@ async function renderShop() {
           Buy Now
         </button>
       </div>
-    </div>`
-    )
-    .join("");
+    </div>`;
+}
+
+async function renderShop() {
+  const costumeGrid  = document.querySelector("[data-shop-grid-costumes]");
+  const designedGrid = document.querySelector("[data-shop-grid-designed]");
+  if (!costumeGrid && !designedGrid) return;
+
+  const res = await fetch("data/products.json");
+  const products = await res.json();
+
+  const costumes  = products.filter(p => p.tag === "Standard Costume");
+  const designed  = products.filter(p => p.tag !== "Standard Costume");
+
+  if (costumeGrid)  costumeGrid.innerHTML  = costumes.map(productCardHTML).join("");
+  if (designedGrid) designedGrid.innerHTML = designed.map(productCardHTML).join("");
 
   if (window.ScrollTrigger) ScrollTrigger.refresh();
 }

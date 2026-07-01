@@ -30,6 +30,31 @@
     background-size: 110px 16px;
   }
   #tape-tip { position:absolute; left:0; width:110px; height:auto; }
+
+  /* on mobile: shrink the tape and give the hero text enough left
+     padding to clear it cleanly */
+  @media (max-width: 768px) {
+    #tape-reveal-wrap { width:55px; }
+    #tape-stack        { width:55px; }
+    #tape-head         { width:55px; }
+    #tape-tile         { width:55px; background-size: 55px 8px; }
+    #tape-tip          { width:55px; }
+
+    header.hero .container { padding-left: 70px; }
+  }
+
+  #tape-swing-wrap { position:absolute; top:0; left:0; transform-origin: top center; }
+  #tape-reveal-wrap { position:absolute; top:0; left:0; overflow:hidden; width:110px; height:0; }
+  #tape-stack { position:absolute; top:0; left:0; width:110px; }
+
+  #tape-head { position:absolute; top:0; left:0; width:110px; height:auto; }
+  #tape-tile {
+    position:absolute; left:0; width:110px;
+    background-image: url('tape-tile.png');
+    background-repeat: repeat-y;
+    background-size: 110px 16px;
+  }
+  #tape-tip { position:absolute; left:0; width:110px; height:auto; }
 </style>
 </head>
 <body>
@@ -163,19 +188,24 @@
   const tileDiv = document.getElementById('tape-tile');
   const tipImg = document.getElementById('tape-tip');
 
-  if (!hero || !anchor || !button || typeof gsap === 'undefined') return; // fail quietly if anything's missing
+  if (!hero || !anchor || !button || typeof gsap === 'undefined') return;
 
-  const TAPE_W = 110;
   const HEAD_NATURAL = { w: 380, h: 339 };
   const TILE_NATURAL = { w: 380, h: 55 };
   const TIP_NATURAL  = { w: 380, h: 80 };
 
-  const scale = TAPE_W / HEAD_NATURAL.w;
-  const headH = HEAD_NATURAL.h * scale;
-  const tileTileH = TILE_NATURAL.h * scale;
-  const tipH = TIP_NATURAL.h * scale;
+  // read the actual rendered CSS width rather than hardcoding 110 —
+  // this picks up the @media (max-width:768px) override automatically
+  function getTapeW() {
+    return parseFloat(getComputedStyle(revealWrap).width) || 110;
+  }
 
   function measure() {
+    const TAPE_W = getTapeW();
+    const scale = TAPE_W / HEAD_NATURAL.w;
+    const headH = HEAD_NATURAL.h * scale;
+    const tipH = TIP_NATURAL.h * scale;
+
     const heroRect = hero.getBoundingClientRect();
     const anchorRect = anchor.getBoundingClientRect();
     const btnRect = button.getBoundingClientRect();
@@ -187,19 +217,21 @@
     const dropHeight = Math.max(headH + tipH + 20, targetY - mountY);
     const tileSpanH = Math.max(0, dropHeight - headH - tipH);
 
-    return { mountX, mountY, dropHeight, tileSpanH };
+    return { mountX, mountY, dropHeight, tileSpanH, TAPE_W, headH, tipH, scale };
   }
 
   function layout() {
     const g = measure();
-    gsap.set(swingWrap, { x: g.mountX + 14, y: g.mountY });
-    gsap.set(revealWrap, { x: 0, y: 0, width: TAPE_W });
-    gsap.set(stack, { width: TAPE_W });
+    const tileTileH = TILE_NATURAL.h * g.scale;
 
-    gsap.set(headImg, { x: 0, y: 0, width: TAPE_W });
-    gsap.set(tileDiv, { x: 0, y: headH, width: TAPE_W, height: g.tileSpanH });
-    tileDiv.style.backgroundSize = `${TAPE_W}px ${tileTileH}px`;
-    gsap.set(tipImg, { x: 0, y: headH + g.tileSpanH, width: TAPE_W });
+    gsap.set(swingWrap, { x: g.mountX + 14, y: g.mountY });
+    gsap.set(revealWrap, { x: 0, y: 0, width: g.TAPE_W });
+    gsap.set(stack, { width: g.TAPE_W });
+
+    gsap.set(headImg, { x: 0, y: 0, width: g.TAPE_W });
+    gsap.set(tileDiv, { x: 0, y: g.headH, width: g.TAPE_W, height: g.tileSpanH });
+    tileDiv.style.backgroundSize = `${g.TAPE_W}px ${tileTileH}px`;
+    gsap.set(tipImg, { x: 0, y: g.headH + g.tileSpanH, width: g.TAPE_W });
 
     return g;
   }

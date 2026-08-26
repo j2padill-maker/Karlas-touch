@@ -1,122 +1,131 @@
-/* ============================================================
-   WhatsApp contact button  —  Karla's Design & Stitch
-   ------------------------------------------------------------
-   Self-contained. Injects a floating "Message us on WhatsApp"
-   button on every page it's loaded on. Tapping it opens the
-   customer's WhatsApp with a friendly, page-aware message
-   already typed in; the customer just hits send.
+/* =========================================================================
+   Karla's Design & Stitch — floating Contact widget
+   Self-contained. Loads on every page via the existing tag before </body>:
+       <script src="js/whatsapp.js" defer></script>
+   (Filename kept as whatsapp.js on purpose so the HTML pages don't change.)
 
-   >>> TO GO LIVE: replace WA_NUMBER below with Karla's WhatsApp
-   >>> Business number — digits only, country code first, NO
-   >>> "+", spaces, or dashes.
-   >>>   e.g.  US (619) 555-0123   ->   "16195550123"
-   >>>         MX (664) 123-4567   ->   "526641234567"
+   Tapping the button opens a small menu: WhatsApp + Email + Call + Text.
+   Email / Call / Text need NO app installed — they work on every device.
 
-   To remove this feature entirely: delete this file and the
-   <script src="js/whatsapp.js"> line at the bottom of each page.
-   ============================================================ */
-(function KarlaWhatsApp() {
+   >>> SET THESE THREE VALUES, then commit + push <<<
+   ========================================================================= */
+(function () {
   "use strict";
 
-  // --- CONFIG -------------------------------------------------
-  var WA_NUMBER = "16195379944";           // LIVE: Karla's WhatsApp Business number — (619) 537-9944
-  var BUTTON_LABEL = "Message us";          // text shown beside the icon on desktop
+  var WA_NUMBER     = "16195379944";                    // WhatsApp: digits only, country code first, no + or spaces
+  var CONTACT_EMAIL = "Lunita5_@hotmail.com";  // <-- Karla's business email address
+  var CONTACT_PHONE = "16195379944";                    // Call / Text number (the Google Voice number works). Digits only.
 
-  // Page-aware opening message. Falls back to DEFAULT for any
-  // page not listed. Keep these warm and specific — it's the
-  // first thing a customer sends, so it should start the sale.
-  var MESSAGES = {
-    "commissions": "Hi Karla! I'd love a quote for a custom commission —",
-    "alterations": "Hi Karla! I'd like to book an alteration —",
-    "customize":   "Hi Karla! I have a piece I'd love to customize —",
-    "shop":        "Hi Karla! I have a question about an item in your shop —",
-    "about":       "Hi Karla! I found your site and wanted to reach out —",
-    "DEFAULT":     "Hi Karla! I saw your site and I'd love to ask about —"
-  };
-  // ------------------------------------------------------------
+  var LAUNCHER_COLOR = "#2D7D7D";  // brand teal (--thread). Change to "#25D366" if you want WhatsApp green instead.
 
-  // Guard: never inject twice (some pages load main.js more than once)
-  if (document.getElementById("wa-float")) return;
-
-  // Pick the message for this page based on the filename
-  function pickMessage() {
-    var file = (location.pathname.split("/").pop() || "index.html")
-      .replace(".html", "").toLowerCase();
-    return MESSAGES[file] || MESSAGES.DEFAULT;
+  /* ---- page-aware pre-filled message ---------------------------------- */
+  function pageIntro() {
+    var p = (location.pathname || "").toLowerCase();
+    if (p.indexOf("commission") > -1) return "Hi Karla! I'd like to ask about a custom commission —";
+    if (p.indexOf("customize")  > -1) return "Hi Karla! I'd like to customize a piece —";
+    if (p.indexOf("alteration") > -1) return "Hi Karla! I have an alteration I'd like help with —";
+    if (p.indexOf("shop")       > -1) return "Hi Karla! I saw something in your shop and —";
+    if (p.indexOf("about")      > -1) return "Hi Karla! I read your About page and —";
+    return "Hi Karla! I saw your site and I'd love to ask about —";
   }
 
-  var href = "https://wa.me/" + WA_NUMBER +
-             "?text=" + encodeURIComponent(pickMessage());
+  var msg    = pageIntro();
+  var encMsg = encodeURIComponent(msg);
 
-  // --- Styles (scoped to #wa-float, safe to delete) -----------
+  var LINKS = {
+    wa:    "https://wa.me/" + WA_NUMBER + "?text=" + encMsg,
+    email: "mailto:" + CONTACT_EMAIL +
+             "?subject=" + encodeURIComponent("Website inquiry — Karla's Design & Stitch") +
+             "&body=" + encMsg,
+    call:  "tel:+" + CONTACT_PHONE,
+    text:  "sms:+" + CONTACT_PHONE + "?&body=" + encMsg
+  };
+
+  /* ---- styles --------------------------------------------------------- */
   var css = ''
-    + '#wa-float{position:fixed;right:20px;bottom:20px;z-index:940;'
-    +   'display:inline-flex;align-items:center;gap:10px;'
-    +   'background:#25D366;color:#fff;text-decoration:none;'
-    +   'padding:13px 18px;border-radius:50px;'
-    +   'font-family:"Inter",-apple-system,sans-serif;font-weight:600;'
-    +   'font-size:0.95rem;line-height:1;'
-    +   'box-shadow:0 6px 20px rgba(37,211,102,0.35),0 2px 6px rgba(31,56,56,0.2);'
-    +   'transition:transform .18s ease,box-shadow .18s ease;'
-    +   'opacity:0;transform:translateY(12px);}'
-    + '#wa-float.wa-in{opacity:1;transform:translateY(0);}'
-    + '#wa-float:hover{transform:translateY(-2px);text-decoration:none;'
-    +   'box-shadow:0 10px 26px rgba(37,211,102,0.45),0 3px 8px rgba(31,56,56,0.25);}'
-    + '#wa-float:focus-visible{outline:3px solid #1F3838;outline-offset:3px;}'
-    + '#wa-float svg{width:26px;height:26px;flex:0 0 auto;display:block;}'
-    + '#wa-float .wa-label{white-space:nowrap;}'
-    /* On phones: show just the round icon to stay out of the way */
-    + '@media (max-width:600px){'
-    +   '#wa-float{padding:0;width:56px;height:56px;justify-content:center;right:16px;bottom:16px;}'
-    +   '#wa-float .wa-label{display:none;}'
-    + '}'
-    + '@media (prefers-reduced-motion:reduce){'
-    +   '#wa-float{transition:none;opacity:1;transform:none;}'
+    + '.kds-contact{position:fixed;right:20px;bottom:20px;z-index:99999;'
+    +   'font-family:"Inter",system-ui,-apple-system,sans-serif;}'
+    + '.kds-launcher{display:flex;align-items:center;gap:9px;border:none;cursor:pointer;'
+    +   'background:' + LAUNCHER_COLOR + ';color:#fff;font-size:15px;font-weight:600;'
+    +   'padding:13px 20px;border-radius:999px;box-shadow:0 6px 20px rgba(0,0,0,.22);'
+    +   'transition:transform .15s ease,box-shadow .15s ease;}'
+    + '.kds-launcher:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(0,0,0,.28);}'
+    + '.kds-launcher svg{width:22px;height:22px;flex:0 0 auto;}'
+    + '.kds-menu{position:absolute;right:0;bottom:64px;width:236px;background:#fff;'
+    +   'border-radius:16px;padding:8px;box-shadow:0 14px 40px rgba(0,0,0,.22);'
+    +   'opacity:0;visibility:hidden;transform:translateY(10px);pointer-events:none;'
+    +   'transition:opacity .18s ease,transform .18s ease,visibility .18s;}'
+    + '.kds-contact.open .kds-menu{opacity:1;visibility:visible;transform:translateY(0);pointer-events:auto;}'
+    + '.kds-title{font-size:12px;font-weight:600;color:#6b7d7d;text-transform:uppercase;'
+    +   'letter-spacing:.06em;padding:8px 12px 6px;}'
+    + '.kds-item{display:flex;align-items:center;gap:12px;text-decoration:none;'
+    +   'padding:11px 12px;border-radius:12px;color:#1F3838;font-size:14.5px;font-weight:500;'
+    +   'transition:background .12s ease;}'
+    + '.kds-item:hover{background:#F0F7F5;}'
+    + '.kds-item small{display:block;font-size:11.5px;font-weight:400;color:#7c8a8a;margin-top:1px;}'
+    + '.kds-ic{width:34px;height:34px;border-radius:50%;flex:0 0 auto;display:flex;'
+    +   'align-items:center;justify-content:center;}'
+    + '.kds-ic svg{width:18px;height:18px;fill:#fff;}'
+    + '@media(max-width:600px){'
+    +   '.kds-launcher .kds-label{display:none;}'
+    +   '.kds-launcher{padding:15px;border-radius:50%;}'
     + '}';
 
   var style = document.createElement("style");
-  style.id = "wa-float-style";
   style.textContent = css;
   document.head.appendChild(style);
 
-  // --- Button -------------------------------------------------
-  var a = document.createElement("a");
-  a.id = "wa-float";
-  a.href = href;
-  a.target = "_blank";
-  a.rel = "noopener";
-  a.setAttribute("aria-label", "Message Karla on WhatsApp");
-  a.innerHTML =
-    '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' +
-    '<path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15' +
-    '-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475' +
-    '-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52' +
-    '.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207' +
-    '-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372' +
-    '-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487' +
-    '.71.306 1.263.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413' +
-    '.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0' +
-    '1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436' +
-    '-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 ' +
-    '9.885-9.885 9.885M20.52 3.449C18.24 1.245 15.24 0 12.045 0 5.463 0 .104 5.359.101 11.945c0 2.096' +
-    '.549 4.14 1.595 5.945L0 24l6.335-1.652a11.882 11.882 0 005.71 1.454h.006c6.585 0 11.946-5.359 ' +
-    '11.949-11.945a11.821 11.821 0 00-3.487-8.464z"/></svg>' +
-    '<span class="wa-label">' + BUTTON_LABEL + '</span>';
+  /* ---- icons (inline SVG) --------------------------------------------- */
+  var IC = {
+    chat: '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>',
+    wa:   '<svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1s-.5-.1-.7.2-.8 1-.9 1.2-.3.2-.6.1a8 8 0 0 1-2.4-1.5 9 9 0 0 1-1.6-2c-.2-.3 0-.5.1-.6l.5-.5c.1-.2.2-.3.3-.5s0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5H8c-.2 0-.5.1-.7.3a3 3 0 0 0-1 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.6 4c.6.3 1.1.5 1.5.6a3.6 3.6 0 0 0 1.6.1 2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .1-1.2c0-.2-.2-.2-.5-.4zM12 2a10 10 0 0 0-8.6 15L2 22l5.1-1.3A10 10 0 1 0 12 2z"/></svg>',
+    mail: '<svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5z"/></svg>',
+    call: '<svg viewBox="0 0 24 24"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.2 11 11 0 0 0 3.5.6 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11 11 0 0 0 .6 3.5 1 1 0 0 1-.2 1z"/></svg>',
+    text: '<svg viewBox="0 0 24 24"><path d="M20 2H4a2 2 0 0 0-2 2v18l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zM7 9h10v2H7zm0 4h7v2H7z"/></svg>'
+  };
 
-  function mount() {
-    document.body.appendChild(a);
-    // gentle entrance once it's on the page
-    requestAnimationFrame(function () {
-      requestAnimationFrame(function () { a.classList.add("wa-in"); });
-    });
-    if (WA_NUMBER === "15550000000") {
-      console.info("[WhatsApp] Using PLACEHOLDER number — set WA_NUMBER in js/whatsapp.js to go live.");
+  function item(href, bg, icon, label, sub) {
+    return '<a class="kds-item" href="' + href + '">'
+      +   '<span class="kds-ic" style="background:' + bg + '">' + icon + '</span>'
+      +   '<span>' + label + '<small>' + sub + '</small></span>'
+      + '</a>';
+  }
+
+  /* ---- build ---------------------------------------------------------- */
+  var wrap = document.createElement("div");
+  wrap.className = "kds-contact";
+  wrap.innerHTML =
+      '<div class="kds-menu" role="menu">'
+    +   '<div class="kds-title">Chat with us</div>'
+    +   item(LINKS.wa,    "#25D366", IC.wa,   "WhatsApp", "Fastest reply")
+    +   item(LINKS.email, "#2D7D7D", IC.mail, "Email",    "We\'ll get back to you")
+    +   item(LINKS.call,  "#1F3838", IC.call, "Call us",  "Talk to Karla")
+    +   item(LINKS.text,  "#8A9B9B", IC.text, "Text us",  "Send a message")
+    + '</div>'
+    + '<button class="kds-launcher" type="button" aria-label="Contact us" aria-expanded="false">'
+    +   IC.chat + '<span class="kds-label">Message us</span>'
+    + '</button>';
+
+  document.body.appendChild(wrap);
+
+  var launcher = wrap.querySelector(".kds-launcher");
+  launcher.addEventListener("click", function (e) {
+    e.stopPropagation();
+    var open = wrap.classList.toggle("open");
+    launcher.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+
+  // close when tapping elsewhere
+  document.addEventListener("click", function (e) {
+    if (!wrap.contains(e.target)) {
+      wrap.classList.remove("open");
+      launcher.setAttribute("aria-expanded", "false");
     }
-  }
-
-  if (document.body) {
-    mount();
-  } else {
-    document.addEventListener("DOMContentLoaded", mount);
-  }
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") {
+      wrap.classList.remove("open");
+      launcher.setAttribute("aria-expanded", "false");
+    }
+  });
 })();

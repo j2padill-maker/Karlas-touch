@@ -4,35 +4,39 @@
     "name": "Ninja Turtle Costume",
     "tag": "Standard Costume",
     "price": 30,
-    "stripePriceId": "price_1TnUD7RLvsZ5Ug7UySsidr9Z",
+    "stripePriceId": "price_1UEJ7fEVUqiTP8VuM1tf9sw3",
     "image": "images/products/placeholder-1.jpg",
-    "description": "Ready-to-ship Ninja Turtle costume, standard sizing."
+    "description": "Ready-to-ship Ninja Turtle costume, standard sizing.",
+    "weightOz": 23
   },
   {
     "id": "costume-turtle-shell",
     "name": "Turtle Shell Costume",
     "tag": "Standard Costume",
     "price": 30,
-    "stripePriceId": "price_1TnUDoRLvsZ5Ug7UyYWQQcGJ",
+    "stripePriceId": "price_1UEEc0EVUqiTP8VurUShiFlS",
     "image": "images/products/placeholder-2.jpg",
-    "description": "Ready-to-ship Turtle Shell costume, standard sizing."
+    "description": "Ready-to-ship Turtle Shell costume, standard sizing.",
+    "weightOz": 23
   },
   {
     "id": "costume-roblox",
     "name": "Roblox/Minecraft Costume",
     "tag": "Standard Costume",
     "price": 30,
-    "stripePriceId": "price_1TnUF8RLvsZ5Ug7UtJIoNEnC",
+    "stripePriceId": "price_1UEEokEVUqiTP8VugLTdZNmg",
     "image": "images/products/placeholder-3.jpg",
-    "description": "Ready-to-ship Roblox/Minecraft-style costume, standard sizing."
+    "description": "Ready-to-ship Roblox/Minecraft-style costume, standard sizing.",
+    "weightOz": 23
   },
   {
     "id": "fridah-khalo-jacket",
     "name": "Fridah Khalo Jacket",
-    "tag": "Designed Piece \u2014 One of a Kind",
+    "tag": "Designed Piece — One of a Kind",
     "price": 45,
-    "stripePriceId": "price_1Tn3PNRLvsZ5Ug7UueONsp3H",
+    "stripePriceId": "price_1UEEcWEVUqiTP8VuEmFhKsa3",
     "image": "images/products/placeholder-4.jpg",
-    "description": "Hand-painted, one-of-a-kind designed jacket."
+    "description": "Hand-painted, one-of-a-kind designed jacket.",
+    "weightOz": 32
   }
 ]

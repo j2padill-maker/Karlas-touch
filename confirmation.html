@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/styles.css" />
   <style>
     .confirmation-section {
       max-width: 680px;
@@ -251,6 +251,9 @@
   </section>
 
   <script>
+    // Payment succeeded -- empty the cart so nothing is accidentally re-bought.
+    try { localStorage.removeItem('atelier_cart_v1'); } catch (e) {}
+
     function showInfo(type) {
       document.getElementById('info-dropoff').classList.remove('visible');
       document.getElementById('info-mailin').classList.remove('visible');

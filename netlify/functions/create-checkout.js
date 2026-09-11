@@ -5,13 +5,22 @@
 // here, as a Netlify environment variable -- never in the repo, never in
 // the browser). Returns a URL the browser redirects to for hosted checkout.
 //
-// Delivery: physical goods get a shipping address + a weight-based flat
-// rate, and free local pickup is always offered alongside it. Service-only
-// orders (hem, resize, repair, consultation) skip all of that -- there is
-// nothing to ship.
+// Delivery: physical goods get a shipping address and a flat $5 shipping
+// rate, upgraded to FREE when the order subtotal is $75 or more. Free local
+// pickup is always offered alongside. Service-only orders (hem, resize,
+// repair, consultation) skip all of that -- there is nothing to ship.
+//
+// The subtotal is computed from Stripe Price amounts (retrieved server-side),
+// never from the client, so a customer cannot tamper with the cart to unlock
+// free shipping.
 //
 // NOTE: there is no inventory tracking anywhere in this flow. Two people
 // can buy the same one-off piece and both charges will succeed.
+//
+// TODO (tail-risk cap): free shipping is NOT weight-capped yet. A large,
+// heavy, cross-country order over $75 ships free and can cost far more than
+// the margin on that order. Add a weight cap using totalOz here once real
+// per-item weights are confirmed with Karla.
 const Stripe = require("stripe");
 
 // Shipping weight in ounces, keyed by live Stripe Price ID.
@@ -25,29 +34,33 @@ const SHIP_WEIGHT_OZ = {
   price_1UEEcWEVUqiTP8VuEmFhKsa3: 32, // Fridah Khalo Jacket
 };
 
-// Flat-rate tiers. Karla's real postage runs about $7-9 for a single
-// ~1.4 lb costume, so tier 1 covers postage plus a mailer with a little
-// margin. Revisit these once there are real shipments to average.
-const SHIPPING_TIERS = [
-  { maxOz: 40, cents: 1000, label: "Standard Shipping (USPS)" },
-  { maxOz: 72, cents: 1800, label: "Standard Shipping (USPS)" },
-  { maxOz: Infinity, cents: 2800, label: "Standard Shipping (USPS)" },
-];
+// Flat $5 shipping, upgraded to free at or above a $75 subtotal.
+const FLAT_SHIPPING_CENTS = 500;
+const FREE_SHIPPING_THRESHOLD_CENTS = 7500;
 
-function shippingRateFor(totalOz) {
-  const tier = SHIPPING_TIERS.find((t) => totalOz <= t.maxOz);
-  return {
-    shipping_rate_data: {
-      type: "fixed_amount",
-      fixed_amount: { amount: tier.cents, currency: "usd" },
-      display_name: tier.label,
-      delivery_estimate: {
-        minimum: { unit: "business_day", value: 3 },
-        maximum: { unit: "business_day", value: 7 },
-      },
+const STANDARD_SHIPPING = {
+  shipping_rate_data: {
+    type: "fixed_amount",
+    fixed_amount: { amount: FLAT_SHIPPING_CENTS, currency: "usd" },
+    display_name: "Standard Shipping (USPS)",
+    delivery_estimate: {
+      minimum: { unit: "business_day", value: 3 },
+      maximum: { unit: "business_day", value: 7 },
     },
-  };
-}
+  },
+};
+
+const FREE_SHIPPING = {
+  shipping_rate_data: {
+    type: "fixed_amount",
+    fixed_amount: { amount: 0, currency: "usd" },
+    display_name: "Free Shipping (USPS)",
+    delivery_estimate: {
+      minimum: { unit: "business_day", value: 3 },
+      maximum: { unit: "business_day", value: 7 },
+    },
+  },
+};
 
 const LOCAL_PICKUP = {
   shipping_rate_data: {
@@ -87,6 +100,19 @@ exports.handler = async (event) => {
       return sum + oz * (Number(item.qty) || 1);
     }, 0);
 
+    // Order subtotal, computed from Stripe Price amounts (never the client),
+    // to decide whether free shipping applies. Each unique price is fetched
+    // once and reused.
+    const priceCache = {};
+    let subtotalCents = 0;
+    for (const item of items) {
+      if (!priceCache[item.priceId]) {
+        priceCache[item.priceId] = await stripe.prices.retrieve(item.priceId);
+      }
+      const unit = priceCache[item.priceId].unit_amount || 0;
+      subtotalCents += unit * (Number(item.qty) || 1);
+    }
+
     const siteUrl = process.env.URL || "http://localhost:8888";
 
     const params = {
@@ -100,7 +126,11 @@ exports.handler = async (event) => {
       // US only for now. Canada is handled by conversation -- customers are
       // pointed at the contact widget to agree a rate directly with Karla.
       params.shipping_address_collection = { allowed_countries: ["US"] };
-      params.shipping_options = [shippingRateFor(totalOz), LOCAL_PICKUP];
+      const shipRate =
+        subtotalCents >= FREE_SHIPPING_THRESHOLD_CENTS
+          ? FREE_SHIPPING
+          : STANDARD_SHIPPING;
+      params.shipping_options = [shipRate, LOCAL_PICKUP];
       // Stripe Tax needs an address, so it is only enabled on these sessions.
       // With no tax registration configured it simply calculates $0.
       params.automatic_tax = { enabled: true };

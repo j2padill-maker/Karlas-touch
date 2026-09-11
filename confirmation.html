@@ -155,6 +155,53 @@
     .back-link:hover {
       text-decoration: underline;
     }
+    /* --- Order-aware additions (product flow + WhatsApp CTA) --- */
+    .product-info {
+      background: #fafafa;
+      border: 1px solid #e0e0e0;
+      border-radius: 12px;
+      padding: 24px;
+      text-align: left;
+      color: #555;
+      font-size: 0.97rem;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .product-info strong { color: #2a9d8f; }
+    .wa-cta {
+      background: #f2fbf8;
+      border: 1px solid #c8ebe8;
+      border-radius: 12px;
+      padding: 28px 24px;
+      text-align: center;
+    }
+    .wa-cta.wa-secondary { margin-top: 24px; }
+    .wa-cta h2 {
+      font-family: 'Gloria Hallelujah', cursive;
+      font-size: 1.15rem;
+      color: #2a9d8f;
+      margin-bottom: 8px;
+    }
+    .wa-cta p { color: #555; font-size: 0.95rem; margin-bottom: 18px; }
+    .btn-whatsapp {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: #25D366;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 15px 28px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      text-decoration: none;
+      font-family: 'Inter', sans-serif;
+      transition: transform .15s ease, box-shadow .15s ease;
+      box-shadow: 0 6px 18px rgba(37,211,102,.35);
+    }
+    .btn-whatsapp:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(37,211,102,.42); }
+    .btn-whatsapp svg { width: 22px; height: 22px; fill: #fff; }
   </style>
 </head>
 <body>
@@ -175,6 +222,31 @@
   </nav>
 
   <section class="confirmation-section">
+
+    <!-- ===== PRODUCT flow (physical goods): shown when ?kind=product ===== -->
+    <div id="product-header" style="display:none;">
+      <h1>Thank you for your order! 🎉</h1>
+      <p class="subtitle">Your payment was received and Karla has been notified. A receipt has been emailed to you from Stripe.</p>
+      <span class="turnaround">⏱ Estimated turnaround: 1 week</span>
+    </div>
+
+    <div id="product-body" style="display:none;">
+      <div class="product-info">
+        <p><strong>What happens next</strong></p>
+        <p>• If you chose <strong>local pickup</strong>, Karla will reach out to arrange a time in the San Diego / Tijuana area.<br />
+           • If you chose <strong>shipping</strong>, your order will go out to the address you entered at checkout.</p>
+      </div>
+      <div class="wa-cta">
+        <h2>Have a question about your order?</h2>
+        <p>Message Karla directly — it's the fastest way to reach her.</p>
+        <a class="btn-whatsapp" id="wa-btn-product" href="#" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1s-.5-.1-.7.2-.8 1-.9 1.2-.3.2-.6.1a8 8 0 0 1-2.4-1.5 9 9 0 0 1-1.6-2c-.2-.3 0-.5.1-.6l.5-.5c.1-.2.2-.3.3-.5s0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5H8c-.2 0-.5.1-.7.3a3 3 0 0 0-1 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.6 4c.6.3 1.1.5 1.5.6a3.6 3.6 0 0 0 1.6.1 2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .1-1.2c0-.2-.2-.2-.5-.4zM12 2a10 10 0 0 0-8.6 15L2 22l5.1-1.3A10 10 0 1 0 12 2z"/></svg>
+          Message Karla on WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== SERVICE flow (alterations): default / ?kind=service ===== -->
     <div id="pre-submit-header">
       <h1>One more step — tell us how you'll get this to us</h1>
       <p class="subtitle">Your payment was received and Karla has been notified. A receipt has been emailed to you from Stripe.</p>
@@ -245,6 +317,15 @@
       </form>
     </div>
 
+    <div class="wa-cta wa-secondary" id="wa-cta-service">
+      <h2>Prefer to message Karla directly?</h2>
+      <p>You can also reach her on WhatsApp about your alteration.</p>
+      <a class="btn-whatsapp" id="wa-btn-service" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1s-.5-.1-.7.2-.8 1-.9 1.2-.3.2-.6.1a8 8 0 0 1-2.4-1.5 9 9 0 0 1-1.6-2c-.2-.3 0-.5.1-.6l.5-.5c.1-.2.2-.3.3-.5s0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5H8c-.2 0-.5.1-.7.3a3 3 0 0 0-1 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.6 4c.6.3 1.1.5 1.5.6a3.6 3.6 0 0 0 1.6.1 2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .1-1.2c0-.2-.2-.2-.5-.4zM12 2a10 10 0 0 0-8.6 15L2 22l5.1-1.3A10 10 0 1 0 12 2z"/></svg>
+        Message Karla on WhatsApp
+      </a>
+    </div>
+
     <p class="success-msg" id="success-msg">✅ Got it! Karla has your delivery details and will be in touch if needed.</p>
 
     <a href="index.html" class="back-link">← Back to homepage</a>
@@ -253,6 +334,38 @@
   <script>
     // Payment succeeded -- empty the cart so nothing is accidentally re-bought.
     try { localStorage.removeItem('atelier_cart_v1'); } catch (e) {}
+
+    // ---- Order-aware setup: product vs service, plus WhatsApp deep links ----
+    var params = new URLSearchParams(location.search);
+    var kind = params.get('kind');
+    var sessionId = params.get('session_id') || '';
+    var ref = sessionId ? sessionId.slice(-8) : '';
+
+    var WA_NUMBER = '16195379944';
+    function waLink(message) {
+      return 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(message);
+    }
+
+    var productMsg = 'Hi Karla! I just placed an order on your website 🎉 I wanted to reach out about it'
+      + (ref ? ' (order ref ' + ref + ')' : '') + ' —';
+    var serviceMsg = 'Hi Karla! I just booked an alteration on your website and wanted to coordinate getting my item to you'
+      + (ref ? ' (order ref ' + ref + ')' : '') + ' —';
+
+    var waProduct = document.getElementById('wa-btn-product');
+    var waService = document.getElementById('wa-btn-service');
+    if (waProduct) waProduct.href = waLink(productMsg);
+    if (waService) waService.href = waLink(serviceMsg);
+
+    if (kind === 'product') {
+      // Physical goods: pickup vs shipping was already chosen at Stripe checkout,
+      // so do NOT show the alterations "how will you get it to us" question.
+      document.getElementById('pre-submit-header').style.display = 'none';
+      document.getElementById('delivery-form-wrapper').style.display = 'none';
+      var svcCta = document.getElementById('wa-cta-service');
+      if (svcCta) svcCta.style.display = 'none';
+      document.getElementById('product-header').style.display = 'block';
+      document.getElementById('product-body').style.display = 'block';
+    }
 
     function showInfo(type) {
       document.getElementById('info-dropoff').classList.remove('visible');
@@ -264,26 +377,30 @@
       }
     }
 
-    // Netlify Forms AJAX submission
-    const form = document.querySelector('form[name="delivery-preference"]');
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
-      const data = new FormData(form);
-      fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(data).toString()
-      })
-      .then(() => {
-        document.getElementById('pre-submit-header').style.display = 'none';
-        document.getElementById('post-submit-header').style.display = 'block';
-        document.getElementById('delivery-form-wrapper').style.display = 'none';
-        document.getElementById('success-msg').style.display = 'block';
-      })
-      .catch(() => {
-        alert('Something went wrong. Please email Karla directly to confirm your drop-off or mail-in.');
+    // Netlify Forms AJAX submission (service / alteration flow only)
+    var form = document.querySelector('form[name="delivery-preference"]');
+    if (form) {
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var data = new FormData(form);
+        fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(data).toString()
+        })
+        .then(function () {
+          document.getElementById('pre-submit-header').style.display = 'none';
+          document.getElementById('post-submit-header').style.display = 'block';
+          document.getElementById('delivery-form-wrapper').style.display = 'none';
+          var svcCta2 = document.getElementById('wa-cta-service');
+          if (svcCta2) svcCta2.style.display = 'none';
+          document.getElementById('success-msg').style.display = 'block';
+        })
+        .catch(function () {
+          alert('Something went wrong. Please email Karla directly to confirm your drop-off or mail-in.');
+        });
       });
-    });
+    }
   </script>
 
 <script src="js/whatsapp.js" defer></script>

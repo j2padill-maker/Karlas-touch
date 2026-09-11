@@ -113,12 +113,15 @@ exports.handler = async (event) => {
       subtotalCents += unit * (Number(item.qty) || 1);
     }
 
+    // product vs service decides what the confirmation page shows.
+    const orderKind = totalOz > 0 ? "product" : "service";
+
     const siteUrl = process.env.URL || "http://localhost:8888";
 
     const params = {
       mode: "payment",
       line_items,
-      success_url: `${siteUrl}/confirmation.html?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${siteUrl}/confirmation.html?session_id={CHECKOUT_SESSION_ID}&kind=${orderKind}`,
       cancel_url: `${siteUrl}/shop.html?checkout=cancelled`,
     };
 

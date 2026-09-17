@@ -32,6 +32,11 @@ const SHIP_WEIGHT_OZ = {
   price_1UEEc0EVUqiTP8VurUShiFlS: 23, // Turtle Shell Costume
   price_1UEEokEVUqiTP8VugLTdZNmg: 23, // Roblox/Minecraft Costume
   price_1UEEcWEVUqiTP8VuEmFhKsa3: 32, // Fridah Khalo Jacket
+  price_1UGkjdEVUqiTP8Vu9d3yEvL7: 10, // Custom Photo Pillow — Standard
+  price_1UGkkgEVUqiTP8Vuij9kMwc1: 24, // Custom Photo Pillow — Large
+  price_1UGkejEVUqiTP8VuC18X92SN: 23, // Bendy Costume
+  price_1UGkdxEVUqiTP8VuN9VvP1Rr: 16, // Joy Costume
+  price_1UGkZSEVUqiTP8VuKijqHx6o: 32, // Denim Jacket with Crochet Sleeves
 };
 
 // Flat $5 shipping, upgraded to free at or above a $75 subtotal.

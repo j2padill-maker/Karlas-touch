@@ -38,5 +38,55 @@
     "image": "images/products/placeholder-4.jpg",
     "description": "Hand-painted, one-of-a-kind designed jacket.",
     "weightOz": 32
+  },
+  {
+    "id": "photo-pillow-standard",
+    "name": "Custom Photo Pillow — Standard",
+    "tag": "Made to Order",
+    "price": 30,
+    "stripePriceId": "price_1UGkjdEVUqiTP8Vu9d3yEvL7",
+    "image": "images/products/photo-pillow-standard.jpg",
+    "description": "Turn a favorite photo into a huggable keepsake, cut and sewn in that exact shape. Standard size is about 12 inches tall — great for a pet or a face. After checkout, message Karla your photo on WhatsApp or email.",
+    "weightOz": 10
+  },
+  {
+    "id": "photo-pillow-large",
+    "name": "Custom Photo Pillow — Large",
+    "tag": "Made to Order",
+    "price": 35,
+    "stripePriceId": "price_1UGkkgEVUqiTP8Vuij9kMwc1",
+    "image": "images/products/photo-pillow-large.jpg",
+    "description": "The same custom keepsake in a bigger cut, 15 to 23.5 inches tall — big enough for a full-body pillow. After checkout, message Karla your photo on WhatsApp or email.",
+    "weightOz": 24
+  },
+  {
+    "id": "costume-bendy",
+    "name": "Bendy Costume",
+    "tag": "Standard Costume",
+    "price": 30,
+    "stripePriceId": "price_1UGkejEVUqiTP8VuC18X92SN",
+    "image": "images/products/bendy-costume.jpg",
+    "description": "Hand-sewn costume inspired by Bendy — the tall ink-drip head, bow tie, and gloves. Sewn to fit; send measurements on WhatsApp or email after checkout.",
+    "weightOz": 23
+  },
+  {
+    "id": "costume-joy",
+    "name": "Joy Costume",
+    "tag": "Standard Costume",
+    "price": 30,
+    "stripePriceId": "price_1UGkdxEVUqiTP8VuN9VvP1Rr",
+    "image": "images/products/joy-costume.jpg",
+    "description": "Glow like Joy — the yellow-green dress scattered with sparkling blue snowflakes, in a soft twirl-friendly cut. Made to measure; send measurements on WhatsApp or email after checkout.",
+    "weightOz": 16
+  },
+  {
+    "id": "denim-crochet-jacket",
+    "name": "Denim Jacket with Crochet Sleeves",
+    "tag": "Made to Order",
+    "price": 85,
+    "stripePriceId": "price_1UGkZSEVUqiTP8VuKijqHx6o",
+    "image": "images/products/denim-crochet-jacket.jpg",
+    "description": "Upcycled denim jacket with hand-crocheted granny-square sleeves in soft pastels. Made to order in your size — hours of handwork, no two alike. Message Karla on WhatsApp or email after checkout.",
+    "weightOz": 32
   }
 ]

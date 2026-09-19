@@ -6,6 +6,7 @@
 <title>Custom Commissions — Karla's Design &amp; Stitch</title>
 <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/rack.css">
 </head>
 <body>
 
@@ -37,35 +38,14 @@
 
   <section class="section">
     <h2>Recent work</h2>
-    <div class="reveal-stagger" style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:24px;">
-      <button class="btn btn-secondary" data-filter-btn="all" onclick="filterPortfolio('all')">All</button>
-      <button class="btn btn-secondary" data-filter-btn="cosplay" onclick="filterPortfolio('cosplay')">Cosplay</button>
-      <button class="btn btn-secondary" data-filter-btn="costume" onclick="filterPortfolio('costume')">Costumes</button>
-      <button class="btn btn-secondary" data-filter-btn="formal" onclick="filterPortfolio('formal')">Garments</button>
+    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:24px;">
+      <button class="btn btn-secondary active" data-rk-filter="all" onclick="rkFilterPortfolio('all')">All</button>
+      <button class="btn btn-secondary" data-rk-filter="cosplay" onclick="rkFilterPortfolio('cosplay')">Cosplay</button>
+      <button class="btn btn-secondary" data-rk-filter="costume" onclick="rkFilterPortfolio('costume')">Costumes</button>
+      <button class="btn btn-secondary" data-rk-filter="formal" onclick="rkFilterPortfolio('formal')">Garments</button>
     </div>
 
-    <div class="grid">
-      <div class="card reveal" data-portfolio-item="cosplay">
-        <img src="images/products/bendy-costume.jpg" alt="Hand-sewn Bendy character costume">
-        <div class="card-body"><span class="tag">Cosplay</span><h4>Bendy character build</h4></div>
-      </div>
-      <div class="card reveal" data-portfolio-item="cosplay">
-        <img src="images/products/joy-costume.jpg" alt="Joy costume from Inside Out">
-        <div class="card-body"><span class="tag">Cosplay</span><h4>Joy — Inside Out</h4></div>
-      </div>
-      <div class="card reveal" data-portfolio-item="costume">
-        <img src="images/products/ninja-turtle-costume.jpg" alt="Ninja Turtle costume group set">
-        <div class="card-body"><span class="tag">Costume</span><h4>Ninja Turtle group set</h4></div>
-      </div>
-      <div class="card reveal" data-portfolio-item="formal">
-        <img src="images/products/kids-dress.jpg" alt="Custom appliqued kids dress">
-        <div class="card-body"><span class="tag">Garment</span><h4>Matching kids dress set</h4></div>
-      </div>
-      <div class="card reveal" data-portfolio-item="formal">
-        <img src="images/products/denim-crochet-jacket.jpg" alt="Denim jacket with crochet sleeves">
-        <div class="card-body"><span class="tag">Garment</span><h4>Crochet-sleeve denim jacket</h4></div>
-      </div>
-    </div>
+    <div class="rackwrap"><div data-rack="portfolio" data-items='[{"name": "Bendy character build", "tag": "Cosplay", "cat": "cosplay", "image": "images/products/bendy-costume.jpg"}, {"name": "Joy — Inside Out", "tag": "Cosplay", "cat": "cosplay", "image": "images/products/joy-costume.jpg"}, {"name": "Ninja Turtle group set", "tag": "Costume", "cat": "costume", "image": "images/products/ninja-turtle-costume.jpg"}, {"name": "Matching kids dress set", "tag": "Garment", "cat": "formal", "image": "images/products/kids-dress.jpg"}, {"name": "Crochet-sleeve denim jacket", "tag": "Garment", "cat": "formal", "image": "images/products/denim-crochet-jacket.jpg"}]'></div></div>
   </section>
 
   <hr class="stitch-divider">
@@ -141,6 +121,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="js/cart.js"></script>
 <script src="js/main.js"></script>
+<script src="js/rack.js"></script>
 <script>
   function handleCommissionSubmit(e) {
     e.preventDefault();

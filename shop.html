@@ -6,6 +6,7 @@
 <title>Shop Ready-to-Ship Costumes — Karla's Design &amp; Stitch</title>
 <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/rack.css">
 </head>
 <body>
 
@@ -39,9 +40,7 @@
   <section class="section">
     <h2>Costume Rack</h2>
     <p class="muted" style="margin-bottom:24px;">Ready-to-ship costumes in standard sizing.</p>
-    <div class="grid" data-shop-grid-costumes>
-      <!-- Rendered by js/main.js -->
-    </div>
+    <div class="rackwrap"><div data-rack="costumes"></div></div>
   </section>
 
   <hr class="stitch-divider">
@@ -50,9 +49,7 @@
   <section class="section">
     <h2>Karla's Custom Made Pieces</h2>
     <p class="muted" style="margin-bottom:24px;">One-of-a-kind designed pieces — hand-crafted by Karla. When they're gone, they're gone.</p>
-    <div class="grid" data-shop-grid-designed>
-      <!-- Rendered by js/main.js -->
-    </div>
+    <div class="rackwrap"><div data-rack="designed"></div></div>
   </section>
 
   <p class="text-center muted" style="margin-top:40px;">
@@ -78,6 +75,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="js/cart.js"></script>
 <script src="js/main.js"></script>
+<script src="js/rack.js"></script>
 <script src="js/whatsapp.js" defer></script>
 </body>
 </html>

@@ -129,6 +129,15 @@
       PORT = { host: portHost, items, filter: "all" };
       drawPortfolio();
     }
+    // Pause the sway animation while a rack is scrolled off-screen. Animated
+    // layers that keep repainting are a common cause of janky mobile scrolling;
+    // pausing them off-screen keeps scrolling smooth with no visual change.
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => e.target.classList.toggle("rk-paused", !e.isIntersecting));
+      }, { rootMargin: "150px 0px" });
+      document.querySelectorAll(".rackwrap").forEach((w) => io.observe(w));
+    }
   }
   document.addEventListener("DOMContentLoaded", init);
   let rt;

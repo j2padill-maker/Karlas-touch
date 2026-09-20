@@ -142,8 +142,20 @@ img { max-width: 100%; display: block; }
   top: 0;
   z-index: 100;
   background: rgba(250,243,232,0.92);
+  -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
   border-bottom: 1px solid var(--paper-edge);
+}
+
+/* Mobile: drop the live blur behind the sticky nav — re-blurring the page
+   every scroll frame is a major cause of janky phone scrolling. Use a nearly
+   opaque bar instead; visually almost identical, far cheaper to paint. */
+@media (max-width: 768px) {
+  .site-nav {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: rgba(250,243,232,0.98);
+  }
 }
 
 .nav-inner {
